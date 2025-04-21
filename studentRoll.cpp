@@ -32,9 +32,24 @@ StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
 
   // TODO... Here is where there is code missing that you need to 
   // fill in...
-
+ 
 
   // KEEP THE CODE BELOW THIS LINE
+
+  Node *current = head;
+  while (current != nullptr){
+    Node*temp = current;
+    current = current->next;
+    delete temp->s;
+    delete temp;
+  }
+  head = tail = nullptr;
+
+  Node*copy = right.head;
+  while (copy != nullptr){
+    insertAtTail(*(copy->s));
+    copy = copy->next;
+  }
   // Overloaded = should end with this line, despite what the textbook says.
   return (*this); 
   
