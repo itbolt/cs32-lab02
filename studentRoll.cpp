@@ -1,26 +1,61 @@
 #include <string>
 #include "studentRoll.h"
+#include <sstream>
+
 
 StudentRoll::StudentRoll() {
-  head = tail = NULL;
-}
-
-void StudentRoll::insertAtTail(const Student &s) {
-  // STUB
-}
-
-std::string StudentRoll::toString() const {
-  return "stub";
+  head = tail = nullptr;
 }
 
 StudentRoll::StudentRoll(const StudentRoll &orig) {
   // STUB
-  head = tail = NULL;
+  head = tail = nullptr;
+  Node *current = orig.head;
+  while (current != nullptr){
+    insertAtTail(*(current->s));
+    current = current->next;
+  }
 }
 
 StudentRoll::~StudentRoll() {
-  // STUB
+  Node *current = head;
+  while (current != nullptr){
+    Node *temp = current;
+    current = current->next;
+    delete temp->s;
+    delete temp;
+  }
 }
+
+void StudentRoll::insertAtTail(const Student &s) {
+  Student *newStudent = new Student(s);
+  Node *newNode = new Node;
+  newNode -> s = newStudent;
+  newNode ->next = nullptr;
+
+  if (tail == nullptr){
+    head = tail = newNode;
+  } else{
+    tail->next = newNode;
+    tail = newNode;
+  }
+
+}
+
+std::string StudentRoll::toString() const {
+  std::ostringstream oss;
+  Node * current = head;
+  while (current != nullptr){
+    oss <<current -> s -> toString();
+    if (current -> next != nullptr){
+      oss << "\n";
+    }
+    current = current->next;
+  }
+  return oss.str();
+}
+
+
 
 StudentRoll & StudentRoll::operator =(const StudentRoll &right ) {
   // The next two lines are standard, and you should keep them.
