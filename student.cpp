@@ -1,56 +1,55 @@
 #include "student.h"
-#include <string>
 #include <cstring>
+#include <sstream>
 
-Student::Student(const char * const name, int perm) {
-  this->setName("another stub");
+Student::Student(const char* name, int perm) {
+  this->perm = perm;
+  this->name = new char[strlen(name) + 1];
+  strncpy(this->name, name, strlen(name) + 1);
 }
 
-int Student::getPerm() const {
-  return -42;
-}
-
-const char * const Student::getName() const {
-  return "stub";
-}
-
-void Student::setPerm(const int permNumber) {
-}
-
-void Student::setName(const char * const name) {
-  this->name = new char[strlen("stub")+1];
-  strcpy(this->name,"stub");
-}
-
-
-Student::Student(const Student &orig) {
-  this->setName("yet another stub");
-  this->setPerm(-42);
+Student::Student(const Student& other) {
+  perm = other.perm;
+  name = new char[strlen(other.name) + 1];
+  strncpy(name, other.name, strlen(other.name) + 1);
 }
 
 Student::~Student() {
-
+  delete[] name;
 }
 
-Student & Student::operator=(const Student &right) {
-  // The next two lines are standard, and you should keep them.
-  // They avoid problems with self-assignment where you might free up 
-  // memory before you copy from it.  (e.g. x = x)
+Student& Student::operator=(const Student& rhs) {
+  if (this == &rhs) return *this;
 
-  if (&right == this) 
-    return (*this);
+  delete[] name;
+  perm = rhs.perm;
+  name = new char[strlen(rhs.name) + 1];
+  strncpy(name, rhs.name, strlen(rhs.name) + 1);
 
-  // TODO... Here is where there is code missing that you need to 
-  // fill in...
-
-
-  // KEEP THE CODE BELOW THIS LINE
-  // Overloaded = should end with this line, despite what the textbook says.
-  return (*this); 
-
+  return *this;
 }
+
+const char* Student::getName() const {
+  return name;
+}
+
+int Student::getPerm() const {
+  return perm;
+}
+
+void Student::setName(const char* newName) {
+  delete[] name;
+  name = new char[strlen(newName) + 1];
+  strncpy(name, newName, strlen(newName) + 1);
+}
+
+void Student::setPerm(int newPerm) {
+  perm = newPerm;
+}
+
 
 std::string Student::toString() const {
-  return "tostring stub";
+  std::ostringstream oss;
+  oss << "[" << name << "," << perm << "]";
+  return oss.str();
 }
-
