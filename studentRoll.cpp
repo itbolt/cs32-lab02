@@ -1,6 +1,7 @@
 #include <string>
 #include "studentRoll.h"
 #include <sstream>
+#include <iostream>
 
 
 StudentRoll::StudentRoll() {
@@ -28,6 +29,8 @@ StudentRoll::~StudentRoll() {
 }
 
 void StudentRoll::insertAtTail(const Student &s) {
+
+  std::cout << "INSERTING: " << s.toString() << std::endl;
   Student *newStudent = new Student(s);
   Node *newNode = new Node;
   newNode -> s = newStudent;
@@ -44,14 +47,16 @@ void StudentRoll::insertAtTail(const Student &s) {
 
 std::string StudentRoll::toString() const {
   std::ostringstream oss;
+  oss << "[" ;
   Node * current = head;
   while (current != nullptr){
     oss <<current -> s -> toString();
     if (current -> next != nullptr){
-      oss << "\n";
+      oss << ",";
     }
     current = current->next;
   }
+  oss << "]";
   return oss.str();
 }
 
