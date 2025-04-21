@@ -29,8 +29,6 @@ StudentRoll::~StudentRoll() {
 }
 
 void StudentRoll::insertAtTail(const Student &s) {
-
-  std::cout << "INSERTING: " << s.toString() << std::endl;
   Student *newStudent = new Student(s);
   Node *newNode = new Node;
   newNode -> s = newStudent;
